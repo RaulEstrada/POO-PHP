@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>Sube usuarios</title>
+    <meta charset="UTF-8"/>
+  </head>
+  <body>
+    <form action="cargaEstudiantes.php" method="post" enctype="multipart/form-data">
+      <label for="ficheroEstudiantes">Fichero con estudiantes: <input id="ficheroEstudiantes" name="ficheroEstudiantes" type="file" required/></label>
+      <button type="submit">Cargar</button>
+    </form>
+    <form action="cargaNotas.php" method="post" enctype="multipart/form-data">
+      <label for="ficheroNotas">Fichero de notas: <input id="ficheroNotas" name="ficheroNotas" type="file" required/></label>
+      <button type="submit">Cargar</button>
+    </form>
+    <form action="borrarBaseDatos.php" method="post">
+      <button type="submit">Reset</button>
+    </form>
+  </body>
+</html>
