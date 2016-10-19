@@ -1,6 +1,6 @@
 <?php
 
-require_once("DatabaseCleaner.php");
+require_once("persistency/DatabaseCleaner.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $databaseCleaner = new DatabaseCleaner();

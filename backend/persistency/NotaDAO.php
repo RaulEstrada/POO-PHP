@@ -2,7 +2,9 @@
 
 require_once("DBConnector.php");
 
-class NotaDAO extends DBConnector {
+class NotaDAO {
+  use DBConnector;
+  
   function addNota($nota) {
     try {
       $sql = "INSERT INTO nota (convocatoria, nota, curso, estudiante) VALUES ('"

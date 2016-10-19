@@ -2,8 +2,8 @@
 
 require_once("model/Curso.php");
 require_once("model/Nota.php");
-require_once("CursoDAO.php");
-require_once("NotaDAO.php");
+require_once("persistency/CursoDAO.php");
+require_once("persistency/NotaDAO.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $file_contents = file_get_contents($_FILES["ficheroNotas"]["tmp_name"]);

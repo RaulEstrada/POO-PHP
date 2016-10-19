@@ -2,7 +2,9 @@
 
 require_once("DBConnector.php");
 
-class EstudianteDAO extends DBConnector {
+class EstudianteDAO {
+  use DBConnector;
+
   function addEstudiante($estudiante) {
     try {
       $sql = "INSERT INTO estudiante (id, nombre, apellidos, fecha_nacimiento, genero) VALUES ('"
@@ -13,6 +15,18 @@ class EstudianteDAO extends DBConnector {
     } catch (PDOException $e) {
         echo $sql . "<br>" . $e->getMessage();
       }
+  }
+
+  function findAll() {
+    try {
+      $sql = "SELECT * FROM estudiante";
+      $conexion = $this->createConnection();
+      $statement = $conexion->prepare($sql);
+      $statement->execute();
+      return $statement->fetchAll();
+    } catch (PDOException $e) {
+      echo $sql . "<br>" . $e->getMessage();
+    }
   }
 
   function deleteAll() {

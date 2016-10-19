@@ -1,7 +1,7 @@
 <?php
 
 require_once("model/Estudiante.php");
-require_once("EstudianteDAO.php");
+require_once("persistency/EstudianteDAO.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $file_contents = file_get_contents($_FILES["ficheroEstudiantes"]["tmp_name"]);

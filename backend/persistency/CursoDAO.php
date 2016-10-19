@@ -2,7 +2,9 @@
 
 require_once("DBConnector.php");
 
-  class CursoDAO extends DBConnector {
+  class CursoDAO {
+    use DBConnector;
+
     function addCurso($curso) {
       try {
         $sql = "INSERT INTO curso (id, curso) VALUES ('"
@@ -24,6 +26,18 @@ require_once("DBConnector.php");
       } catch (PDOException $e) {
           echo $sql . "<br>" . $e->getMessage();
         }
+    }
+
+    function findAll() {
+      try {
+        $sql = "SELECT * FROM curso";
+        $conexion = $this->createConnection();
+        $statement = $conexion->prepare($sql);
+        $statement->execute();
+        return $statement->fetchAll();
+      } catch (PDOException $e) {
+        echo $sql . "<br>" . $e->getMessage();
+      }
     }
 
     function deleteAll() {

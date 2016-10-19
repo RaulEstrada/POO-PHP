@@ -1,6 +1,6 @@
 <?php
 
-require_once("NotaDAO.php");
+require_once("persistency/NotaDAO.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
   $curso_id = $_GET["curso"];
