@@ -12,6 +12,22 @@ trait NotaNumerica {
       return "Suspenso";
     }
   }
+
+  function getDatosMedia($notas) {
+    $suma_notas = 0;
+    $count_alumnos = 0;
+    foreach ($notas as $nota) {
+      if ($nota["nota"] !== "NP") {
+        $suma_notas += $nota["nota"];
+        $count_alumnos += 1;
+      }
+    }
+    $resultado = 0;
+    if ($count_alumnos != 0) {
+      $resultado = $suma_notas / $count_alumnos;
+    }
+    return $resultado;
+  }
 }
 
  ?>

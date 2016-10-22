@@ -53,9 +53,17 @@
           devolverá datos de todos los cursos académicos.</p>
         </header>
         <form id="cursoForm" onsubmit="consultarCurso(event)">
-          <label for="cursoAcademico">Curso académico: <input type="text" id="cursoAcademico" name="cursoAcademico" placeholder="2014/2015"/></label>
+          <label for="cursoAcademico">Curso académico: <input type="text" id="cursoAcademico" name="cursoAcademico" placeholder="2014-15"/></label>
           <button type="submit">Buscar</button>
         </form>
+        <p>En esta primera consulta se puede ver en una gráfica de líneas la nota media de cada convocatoria del curso (sin tener en cuenta NO PRESENTADOS).</p>
+        <div id="cursoConvocatoriasMedias"></div>
+        <p>En esta segunda consulta se puede ver en una gráfica Gauge la nota media del curso o conjunto de cursos (dependiendo del filtro), sin
+          tener en cuenta NO PRESENTADOS.</p>
+        <div id="cursoMedias"></div>
+        <p>En esta tercera consulta se puede ver en una gráfica de barras las notas medias del curso o conjunto de cursos (dependiendo del filtro), sin
+          tener en cuenta NO PRESENTADOS, según el género de los estudiantes.</p>
+        <div id="cursoMediasGenero"></div>
       </section>
       <section id="asignatura">
         <header>

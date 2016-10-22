@@ -6,7 +6,7 @@ function consultarEstudiante(event) {
     data: $("#estudiantesForm").serialize()
   }).done(function(data) {
     crearGraficaEstudianteAsignaturas(data);
-    crearGraficaEstudianteMedia(data);
+    crearGraficaEstudianteMedia(data, "#estudiantesMedias");
     crearGraficaEstudianteCurso(data);
     crearGraficaEstudianteNotaAlfabetica(data);
   }).fail(function(data) {
@@ -31,14 +31,14 @@ function crearGraficaEstudianteAsignaturas(data) {
   barchartGrouped.draw();
 }
 
-function crearGraficaEstudianteMedia(data) {
-  $("#estudiantesMedias").html("");
+function crearGraficaEstudianteMedia(data, selector) {
+  $(selector).html("");
   var notaMedia = Math.round(data.notaMedia * 100) / 100;
   var gauge = new proteic.Gauge([{x: notaMedia}], {
      minLevel: 0,
      maxLevel: 10,
      ticks: 1,
-     selector: '#estudiantesMedias',
+     selector: selector,
      label: 'Nota media'
    });
   gauge.draw();
@@ -80,7 +80,52 @@ function crearGraficaEstudianteNotaAlfabetica(data) {
 
 function consultarCurso(event) {
   event.preventDefault();
-  alert("hiii");
+  $.ajax({
+    url: "backend/consultaCurso.php",
+    type: "get",
+    data: $("#cursoForm").serialize()
+  }).done(function(data) {
+    crearGraficaCursoConvocatorias(data);
+    crearGraficaEstudianteMedia(data, "#cursoMedias");
+    crearGraficaCursoGenero(data);
+  }).fail(function(data) {
+    alert("FAIL: " + data);
+  });
+}
+
+function crearGraficaCursoConvocatorias(data) {
+  $("#cursoConvocatoriasMedias").html("");
+  var datosConvocatorias = data.datosConvocatorias;
+  var dataGrafica = [];
+  for (var convocatoria in datosConvocatorias) {
+    dataGrafica.push({x: convocatoria, key: 'Nota media', y: "" + datosConvocatorias[convocatoria].toFixed(2)});
+  }
+  areaLinechart = new proteic.Linechart(dataGrafica, {
+      selector: '#cursoConvocatoriasMedias',
+      area: true,
+      width: '70%',
+      height: 400,
+      xAxisType: 'linear',
+      xAxisLabel: 'Convocatoria'
+  });
+  areaLinechart.draw();
+}
+
+function crearGraficaCursoGenero(data) {
+  $("#cursoMediasGenero").html("");
+  var datosGenero = data.datosGenero;
+  var dataGrafica = [];
+  for (var genero in datosGenero) {
+    dataGrafica.push({x: genero, key: genero + ": " + datosGenero[genero], y: datosGenero[genero]});
+  }
+  var barchartGrouped = new proteic.Barchart(dataGrafica, {
+    selector: '#cursoMediasGenero',
+    stacked: false,
+    xAxisLabel: 'Género',
+    yAxisLabel: 'Nota media',
+    width: '60%'
+  });
+  barchartGrouped.draw();
 }
 
 function consultarAsignatura(event) {

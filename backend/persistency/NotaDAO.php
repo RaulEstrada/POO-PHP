@@ -26,8 +26,10 @@ class NotaDAO {
   }
 
   function findByCurso($curso) {
-    $sql = "SELECT e.*, n.* FROM nota n, estudiante e WHERE n.estudiante = e.id AND curso = '"
-      . $curso . "';";
+    $sql = "SELECT e.*, n.* FROM nota n, estudiante e WHERE n.estudiante = e.id";
+    if ($curso != null) {
+      $sql = $sql . " AND curso = '" . $curso . "'";
+    }
     $conexion = $this->createConnection();
     $statement = $conexion->prepare($sql);
     $statement->execute();
