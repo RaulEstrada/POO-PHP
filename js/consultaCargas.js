@@ -2,8 +2,7 @@ $(document).ready(function() {
   $.ajax({
         url: "backend/consultaCargas.php",
         type: "get"
-    }).done(function(data) {
-      var json = JSON.parse(data);
+    }).done(function(json) {
       var tablaCursos = $("#cursos tbody");
       for(var indx = 0; indx < json.cursos.length; indx++) {
         var curso = json.cursos[indx];
@@ -24,52 +23,52 @@ $(document).ready(function() {
 });
 
 function crearGraficoGenero(estudiantes) {
-  var estadisticas = {1: 0, 2: 0};
+  var estadisticas = {'Hombre': 0, 'Mujer': 0};
   for (var indx = 0; indx < estudiantes.length; indx++) {
     var estudiante = estudiantes[indx];
     estadisticas[estudiante.genero] += 1;
   }
-  var data = [
-    {x: '1', key: "1: " + estadisticas[1], y: estadisticas[1]},
-    {x: '2', key: "2: " + estadisticas[2], y: estadisticas[2]}
-  ];
-  var barchart = new proteic.Barchart(data);
-  barchart.draw();
+  var gaugeHombre = new proteic.Gauge([{x: estadisticas['Hombre']}], {
+     minLevel: 0,
+     maxLevel: estudiantes.length,
+     ticks: 10,
+     selector: '#generoChart',
+     label: 'Hombres',
+     width: '45%'
+   });
+  gaugeHombre.draw();
+  var gaugeMujer = new proteic.Gauge([{x: estadisticas['Mujer']}], {
+      minLevel: 0,
+      maxLevel: estudiantes.length,
+      ticks: 10,
+      selector: '#generoChart',
+      label: 'Mujeres',
+      width: '45%'
+  });
+  gaugeMujer.draw();
 }
 
 function crearGraficoEdad(estudiantes) {
-  var estadisticas = {"70": {1: 0, 2: 0}, "75": {1: 0, 2:0}, "80": {1: 0, 2:0}, "85": {1:0, 2:0}, "90": {1:0, 2:0}};
+  var estadisticas = {};
   for (var indx = 0; indx < estudiantes.length; indx++) {
     var estudiante = estudiantes[indx];
     var fecha = estudiante.fecha_nacimiento.split("-");
     var year = fecha[fecha.length-1];
-    if (year <= 1970) {
-      estadisticas["70"][estudiante.genero] += 1;
-    } else if (year <= 1975) {
-      estadisticas["75"][estudiante.genero] += 1;
-    } else if (year <= 1980) {
-      estadisticas["80"][estudiante.genero] += 1;
-    } else if (year <= 1985) {
-      estadisticas["85"][estudiante.genero] += 1;
-    } else {
-      estadisticas["90"][estudiante.genero] += 1;
+    if (!estadisticas[year]) {
+      estadisticas[year] = {'Hombre': 0, 'Mujer': 0};
     }
+    estadisticas[year][estudiante.genero] += 1;
   }
-
-  var data = [
-        {'key': 'Hombre', x: '31/12/1970', y:estadisticas["70"][1]},
-        {'key': 'Mujer', x: '31/12/1970', y:estadisticas["70"][2]},
-        {'key': 'Hombre', x: '31/12/1975', y:estadisticas["75"][1]},
-        {'key': 'Mujer', x: '31/12/1975', y:estadisticas["75"][2]},
-        {'key': 'Hombre', x: '31/12/1980', y:estadisticas["80"][1]},
-        {'key': 'Mujer', x: '31/12/1980', y:estadisticas["80"][2]},
-        {'key': 'Hombre', x: '31/12/1985', y:estadisticas["85"][1]},
-        {'key': 'Mujer', x: '31/12/1985', y:estadisticas["85"][2]},
-        {'key': 'Hombre', x: '31/12/1999', y:estadisticas["90"][1]},
-        {'key': 'Mujer', x: '31/12/1999', y:estadisticas["90"][2]}
-      ];
-        var stackedArea = new proteic.StackedArea(data, {
-          xAxisLabel: 'Date'
-        });
-        stackedArea.draw();
+  var dataArea = [];
+  for (var year in estadisticas) {
+    dataArea.push({key:'Hombre', x:year, y:estadisticas[year]['Hombre']});
+    dataArea.push({key:'Mujer', x:year, y:estadisticas[year]['Mujer']});
+  }
+  areaLinechart = new proteic.Linechart(dataArea, {
+      selector: '#edadChart',
+      area: true,
+      width: '90%',
+      height: 400
+  });
+  areaLinechart.draw();
 }

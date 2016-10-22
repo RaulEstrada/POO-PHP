@@ -11,8 +11,9 @@ class EstudianteHandler {
       $errors = [];
       foreach ($personas as $persona) {
         $estudianteID = $persona["id"];
+        $genero = $persona["genero"] == "1" ? "Hombre" : "Mujer";
         $estudiante = new Estudiante($estudianteID, $persona["nombre"], $persona["apellidos"],
-          $persona["fechaNacimiento"], $persona["genero"]);
+          $persona["fechaNacimiento"], $genero);
         try {
           $estudianteDAO->addEstudiante($estudiante);
         } catch (PDOException $e) {
