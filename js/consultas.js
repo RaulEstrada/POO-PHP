@@ -25,7 +25,8 @@ function crearGraficaEstudianteAsignaturas(data) {
     selector: '#estudiantesAsignaturasMedias',
     stacked: false,
     xAxisLabel: 'Asignatura',
-    yAxisLabel: 'Nota media'
+    yAxisLabel: 'Nota media',
+    width: '60%'
   });
   barchartGrouped.draw();
 }
@@ -48,17 +49,18 @@ function crearGraficaEstudianteCurso(data) {
   var datosCursos = data.datosCursoAcademico;
   var dataGrafica = [];
   for (var curso in datosCursos) {
-    var year = curso.split("-")[0];
-    dataGrafica.push({x: year, key: 'Nota media', y: datosCursos[curso]});
+    var year = curso.split("-")[0].substring(2,4);
+    dataGrafica.push({x: '01/01/' + year, key: 'Nota media', y: datosCursos[curso].toFixed(2)});
   }
   areaLinechart = new proteic.Linechart(dataGrafica, {
       selector: '#estudiantesCursoMedias',
       area: true,
-      width: '90%',
+      width: '70%',
       height: 400,
-      xAxisFormat: '%d'
+      xAxisType: 'time'
   });
   areaLinechart.draw();
+  $("#estudiantesCursoMedias g.x g.tick text").attr("transform", "translate(0, 40),rotate(90)");
 }
 
 function crearGraficaEstudianteNotaAlfabetica(data) {
