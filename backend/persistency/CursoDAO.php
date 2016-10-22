@@ -12,12 +12,20 @@ require_once("DBConnector.php");
       $conexion->exec($sql);
     }
 
-    function findCurso($idCurso) {
-      $sql = "SELECT id FROM curso WHERE id = '" . $idCurso . "';";
+    function findCurso($idCurso, $curso) {
+      $sql = "SELECT * FROM curso WHERE id = '" . $idCurso . "' AND curso = '" . $curso . "'";
       $conexion = $this->createConnection();
       $statement = $conexion->prepare($sql);
       $statement->execute();
-      return $statement->fetchAll(PDO::FETCH_COLUMN, "id");
+      return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function findConvocatoriaCurso($idCurso, $curso, $convocatoria) {
+      $sql = "SELECT n.* FROM nota n WHERE n.convocatoria = '" . $convocatoria . "' AND n.curso_id = '" . $idCurso . "' AND n.curso = '" . $curso . "'";
+      $conexion = $this->createConnection();
+      $statement = $conexion->prepare($sql);
+      $statement->execute();
+      return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
     function findAll() {

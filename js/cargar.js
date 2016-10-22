@@ -73,6 +73,7 @@ function displaySubirNotasResult(data) {
   procesarErroresEstudiantesMissing(data, dialog);
   procesarErroresNotasInvalidas(data, dialog);
   procesarErroresNotasRepetidas(data, dialog);
+  procesarErrorCursoRepetido(data, dialog);
 }
 
 function procesarErroresEstudiantesMissing(data, dialog) {
@@ -107,6 +108,13 @@ function procesarErroresNotasRepetidas(data, dialog) {
         errorNota.curso + ": Convocatoria " + errorNota.convocatoria + "</li>";
     }
     msg = msg + "</ul>";
+    dialog.append(msg);
+  }
+}
+
+function procesarErrorCursoRepetido(data, dialog) {
+  if (data.errorCursoRepetido && data.errorCursoRepetido != '') {
+    var msg = "<p>El curso ya se había subido anteriormente. No se han registrado las notas</p>";
     dialog.append(msg);
   }
 }
