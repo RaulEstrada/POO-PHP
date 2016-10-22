@@ -31,14 +31,14 @@
           <label for="ficheroEstudiantes">Fichero con estudiantes: <input id="ficheroEstudiantes" name="ficheroEstudiantes" type="file" required/></label>
           <button class="carga" type="submit">Cargar</button>
         </form>
-        <form action="backend/cargaNotas.php" method="post" enctype="multipart/form-data">
+        <form id="subirNotas" enctype="multipart/form-data">
           <label for="ficheroNotas">Fichero de notas: <input id="ficheroNotas" name="ficheroNotas" type="file" required/></label>
           <button class="carga" type="submit">Cargar</button>
         </form>
     </section>
-      <form action="backend/borrarBaseDatos.php" method="post">
+      <form id="hacerReset">
         <p>Si hace reset, perderá todos los datos cargados previamente (alumnos, cursos y notas de distintas convocatorias).</p>
-        <button id="reset" type="submit">Reset</button>
+        <button id="resetButton" type="submit">Reset</button>
       </form>
     </main>
     <footer>

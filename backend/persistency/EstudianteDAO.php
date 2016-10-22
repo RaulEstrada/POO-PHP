@@ -14,25 +14,17 @@ class EstudianteDAO {
   }
 
   function findAll() {
-    try {
-      $sql = "SELECT * FROM estudiante";
-      $conexion = $this->createConnection();
-      $statement = $conexion->prepare($sql);
-      $statement->execute();
-      return $statement->fetchAll();
-    } catch (PDOException $e) {
-      echo $sql . "<br>" . $e->getMessage();
-    }
+    $sql = "SELECT * FROM estudiante";
+    $conexion = $this->createConnection();
+    $statement = $conexion->prepare($sql);
+    $statement->execute();
+    return $statement->fetchAll();
   }
 
   function deleteAll() {
-    try {
-      $sql = "DELETE FROM estudiante";
-      $conexion = $this->createConnection();
-      $conexion->exec($sql);
-    } catch (PDOException $e) {
-        echo $sql . "<br>" . $e->getMessage();
-      }
+    $sql = "DELETE FROM estudiante";
+    $conexion = $this->createConnection();
+    $conexion->exec($sql);
   }
 }
 

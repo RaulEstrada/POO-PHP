@@ -6,48 +6,32 @@ require_once("DBConnector.php");
     use DBConnector;
 
     function addCurso($curso) {
-      try {
-        $sql = "INSERT INTO curso (id, curso) VALUES ('"
-          . $curso->getId() . "', '" . $curso->getCurso() . "')";
-        $conexion = $this->createConnection();
-        $conexion->exec($sql);
-      } catch (PDOException $e) {
-          echo $sql . "<br>" . $e->getMessage();
-        }
+      $sql = "INSERT INTO curso (id, curso) VALUES ('"
+        . $curso->getId() . "', '" . $curso->getCurso() . "')";
+      $conexion = $this->createConnection();
+      $conexion->exec($sql);
     }
 
     function findCurso($idCurso) {
-      try {
-        $sql = "SELECT id FROM curso WHERE id = '" . $idCurso . "';";
-        $conexion = $this->createConnection();
-        $statement = $conexion->prepare($sql);
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_COLUMN, "id");
-      } catch (PDOException $e) {
-          echo $sql . "<br>" . $e->getMessage();
-        }
+      $sql = "SELECT id FROM curso WHERE id = '" . $idCurso . "';";
+      $conexion = $this->createConnection();
+      $statement = $conexion->prepare($sql);
+      $statement->execute();
+      return $statement->fetchAll(PDO::FETCH_COLUMN, "id");
     }
 
     function findAll() {
-      try {
-        $sql = "SELECT * FROM curso";
-        $conexion = $this->createConnection();
-        $statement = $conexion->prepare($sql);
-        $statement->execute();
-        return $statement->fetchAll();
-      } catch (PDOException $e) {
-        echo $sql . "<br>" . $e->getMessage();
-      }
+      $sql = "SELECT * FROM curso";
+      $conexion = $this->createConnection();
+      $statement = $conexion->prepare($sql);
+      $statement->execute();
+      return $statement->fetchAll();
     }
 
     function deleteAll() {
-      try {
-        $sql = "DELETE FROM curso";
-        $conexion = $this->createConnection();
-        $conexion->exec($sql);
-      } catch (PDOException $e) {
-          echo $sql . "<br>" . $e->getMessage();
-        }
+      $sql = "DELETE FROM curso";
+      $conexion = $this->createConnection();
+      $conexion->exec($sql);
     }
   }
 

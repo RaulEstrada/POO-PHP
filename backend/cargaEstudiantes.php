@@ -26,7 +26,8 @@ class EstudianteHandler {
       print(json_encode($errors));
     } else {
       header("HTTP/1.1 400 Bad Request");
-      print("Método HTTP no permitido");
+      header('Content-Type: application/json');
+      print(json_encode(array("message"=> "Método HTTP no permitido")));
     }
     exit();
   }
