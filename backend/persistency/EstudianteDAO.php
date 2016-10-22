@@ -6,15 +6,11 @@ class EstudianteDAO {
   use DBConnector;
 
   function addEstudiante($estudiante) {
-    try {
-      $sql = "INSERT INTO estudiante (id, nombre, apellidos, fecha_nacimiento, genero) VALUES ('"
-        . $estudiante->getId() . "', '" . $estudiante->getNombre() . "', '" . $estudiante->getApellidos()
-        . "', '" . $estudiante->getFechaNacimiento() . "', '" . $estudiante->getGenero() . "')";
-      $conexion = $this->createConnection();
-      $conexion->exec($sql);
-    } catch (PDOException $e) {
-        echo $sql . "<br>" . $e->getMessage();
-      }
+    $sql = "INSERT INTO estudiante (id, nombre, apellidos, fecha_nacimiento, genero) VALUES ('"
+      . $estudiante->getId() . "', '" . $estudiante->getNombre() . "', '" . $estudiante->getApellidos()
+      . "', '" . $estudiante->getFechaNacimiento() . "', '" . $estudiante->getGenero() . "')";
+    $conexion = $this->createConnection();
+    $conexion->exec($sql);
   }
 
   function findAll() {
