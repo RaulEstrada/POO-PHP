@@ -130,5 +130,56 @@ function crearGraficaCursoGenero(data) {
 
 function consultarAsignatura(event) {
   event.preventDefault();
-  alert("hiii");
+  $.ajax({
+    url: "backend/consultaAsignatura.php",
+    type: "get",
+    data: $("#asignaturaForm").serialize()
+  }).done(function(data) {
+    crearGraficaCursosConvocatoriasAsignatura(data);
+    crearGraficaAsignaturaNotas(data);
+  }).fail(function(data) {
+    alert("FAIL: " + data);
+  });
+}
+
+function crearGraficaCursosConvocatoriasAsignatura(data) {
+  $("#asignaturaConvocatoriasMedias").html("");
+  var datosAsignaturas = data.datosCursosMedia;
+  var dataGrafica = [];
+  for (var curso in datosAsignaturas) {
+    var datosConvocatorias = datosAsignaturas[curso];
+    for (var convocatoria in datosConvocatorias) {
+      dataGrafica.push({x: convocatoria, key: curso + "(" + datosConvocatorias[convocatoria] + ")",
+        y: "" + datosConvocatorias[convocatoria].toFixed(2)});
+    }
+
+  }
+  areaLinechart = new proteic.Linechart(dataGrafica, {
+      selector: '#asignaturaConvocatoriasMedias',
+      area: true,
+      width: '70%',
+      height: 400,
+      xAxisType: 'linear',
+      xAxisLabel: 'Convocatoria'
+  });
+  areaLinechart.draw();
+}
+
+function crearGraficaAsignaturaNotas(data) {
+  $("#asignaturaNotasAlfabeticas").html("");
+  var datosCursos = data.cursosNotasAlfabeticas;
+  var dataGrafica = [{"id": "root", "parent": "", "value": "0", "label": "sequences"}];
+  var indx = 0;
+  for (var curso in datosCursos) {
+    var notas = datosCursos[curso];
+    for (var nota in notas) {
+      var parent = (indx == 0) ? "root" : Object.keys(datosCursos)[indx-1] + nota;
+      dataGrafica.push({id: curso + nota, parent: parent, value: notas[nota], label: curso + "(" + nota + ")"});
+    }
+    indx += 1;
+  }
+  var sunburst = new proteic.Sunburst(dataGrafica, {
+      selector: '#asignaturaNotasAlfabeticas'
+  });
+  sunburst.draw();
 }

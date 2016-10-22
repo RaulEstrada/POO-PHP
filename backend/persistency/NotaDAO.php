@@ -36,6 +36,17 @@ class NotaDAO {
     return $statement->fetchAll();
   }
 
+  function findByAsignatura($asignatura) {
+    $sql = "SELECT e.*, n.* FROM nota n, estudiante e WHERE n.estudiante = e.id";
+    if ($asignatura != null) {
+      $sql = $sql . " AND curso_id = '" . $asignatura . "'";
+    }
+    $conexion = $this->createConnection();
+    $statement = $conexion->prepare($sql);
+    $statement->execute();
+    return $statement->fetchAll();
+  }
+
   function findByEstudianteAndCurso($id_curso, $id_estudiante) {
     $sql = "SELECT n.nota, n.convocatoria, n.estudiante, c.curso FROM nota n, curso c WHERE n.curso_id = c.id AND c.id = '" . $id_curso . "' AND n.estudiante = '"
       . $id_estudiante . "' AND n.nota != 'NP' AND CAST(n.nota AS INTEGER) >= 5 LIMIT 1";
