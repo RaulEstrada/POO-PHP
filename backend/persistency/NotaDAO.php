@@ -70,6 +70,12 @@ class NotaDAO {
     $conexion = $this->createConnection();
     $conexion->exec($sql);
   }
+
+  function deleteByIds($id_estudiante, $id_curso, $curso) {
+    $sql = "DELETE FROM nota WHERE curso_id = '" . $id_curso . "' AND curso = '" . $curso . "' AND estudiante = '" . $id_estudiante . "'";
+    $conexion = $this->createConnection();
+    $conexion->exec($sql);
+  }
 }
 
  ?>

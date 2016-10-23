@@ -19,6 +19,8 @@ $(document).ready(function() {
       }
       crearGraficoGenero(json.estudiantes);
       crearGraficoEdad(json.estudiantes);
+    }).fail(function(data) {
+      alert("FAIL: " + data);
     });
 });
 

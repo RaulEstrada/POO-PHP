@@ -41,6 +41,12 @@ require_once("DBConnector.php");
       $conexion = $this->createConnection();
       $conexion->exec($sql);
     }
+
+    function deleteById($id) {
+      $sql = "DELETE FROM curso WHERE id = '" . $id . "'";
+      $conexion = $this->createConnection();
+      $conexion->exec($sql);
+    }
   }
 
  ?>

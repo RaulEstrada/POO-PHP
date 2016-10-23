@@ -26,6 +26,12 @@ class EstudianteDAO {
     $conexion = $this->createConnection();
     $conexion->exec($sql);
   }
+
+  function deleteById($id) {
+    $sql = "DELETE FROM estudiante WHERE id = '" . $id . "'";
+    $conexion = $this->createConnection();
+    $conexion->exec($sql);
+  }
 }
 
  ?>
